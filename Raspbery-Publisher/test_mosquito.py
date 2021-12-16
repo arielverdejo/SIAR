@@ -79,7 +79,7 @@ def enviar_datos(mensaje):
     print("Conexión cerrada")
 """
 
-def serial_red():
+def serial_read():
     ser = serial.Serial('/dev/ttyACM0', 115200)  # open serial port
     print(ser.name)                              # check which port was r$
     lista_de_datos = []
@@ -103,6 +103,7 @@ def serial_red():
                 i = i - 1
 
 def run():
+    serial_read()
     client = connect_mqtt()
     client.loop_start()
     publish(client)
