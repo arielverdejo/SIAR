@@ -40,20 +40,20 @@ def armar_diccionario_con_lista(lista, otra_lista):
     return dict_from_list
 """
 
-def publish(client):
+def publish(client, cadena):
     msg_count = 0
-    while True:
-        time.sleep(1)
-        # msg = armar_diccionario_con_lista(lista, otra_lista)
-        msg = lista
-        result = client.publish(topic, msg)
-        result: [0, 1]
-        status = result[0]
-        if status == 0:
-            print(f"Send `{msg}` to topic `{topic}`")
-        else:
-            print(f"Failed to send message to topic {topic}")
-        msg_count += 1
+    #while True:
+    time.sleep(1)
+    # msg = armar_diccionario_con_lista(lista, otra_lista)
+    msg = cadena
+    result = client.publish(topic, msg)
+    result: [0, 1]
+    status = result[0]
+    if status == 0:
+        print(f"Send `{msg}` to topic `{topic}`")
+    else:
+        print(f"Failed to send message to topic {topic}")
+    msg_count += 1
 """
 def new_publish():
     # msg = armar_diccionario_con_lista(lista, otra_lista)
@@ -78,7 +78,7 @@ def enviar_datos(mensaje):
     #Imprimimos la palabra Adios para cuando se cierre la conexion
     print("Conexión cerrada")
 """
-
+"""
 def serial_read():
     ser = serial.Serial('/dev/ttyACM0', 115200)  # open serial port
     print(ser.name)                              # check which port was r$
@@ -102,14 +102,37 @@ def serial_read():
                 print(datos_a_enviar)
                 i = i - 1
 
+"""
 def run():
-    serial_read()
-    client = connect_mqtt()
-    client.loop_start()
-    publish(client)
-    # new_publish()
-    # msgs = tuple(lista)
-    # publish.multiple(msgs, broker)
+    ser = serial.Serial('/dev/ttyACM0', 115200)  # open serial port
+    print(ser.name)                              # check which port was r$
+    lista_de_datos = []
+    datos_a_enviar = []
+    AC0 = "000318"                               # chequeo si el Sensor r$
+    while 1:
+        line = ser.readline().decode(encoding = "utf-8")     # write a stri$
+        new_line = (line[:-2])
+        if (new_line == AC0):
+            i = 4
+            while i >= 0:
+                comando = ser.readline().decode(encoding = "utf-8")  # Esto deb$
+                new_comando = comando[:-2]
+                print(new_comando)
+                line = ser.readline().decode(encoding = "utf-8")     # write a $
+                new_line = (line[:-2])
+                lista_de_datos = new_line.split("+")
+                for datos in lista_de_datos:
+                    datos_a_enviar.append(datos)
+                print(datos_a_enviar)
+                i = i - 1
+            cadena_a_enviar = ",".join(datos_a_enviar)
+            client = connect_mqtt()
+            # client.loop_start()
+            publish(client, cadena_a_enviar)
+            # new_publish()
+            # msgs = tuple(lista)
+            # publish.multiple(msgs, broker)
+            datos_a_enviar = []
 
 if __name__ == '__main__':
     run()
