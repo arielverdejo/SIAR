@@ -21,17 +21,17 @@ def enviar_datos(mensaje):
   print("Conexión cerrada")
 
 def serial_read():
-  # Open serial port
-  serie = serial.Serial('/dev/ttyACM0', 115200)
-  # Check port
-  print(serie.name)
-
   lista_de_datos = []
   datos_a_enviar = []
   mensaje = ""
   sequence = 0
   # Variable utilizada para saber si el sensor responde a AC0
   AC0 = "000318"
+
+  # Open serial port
+  serie = serial.Serial('/dev/ttyACM0', 115200)
+  # Check port
+  print(serie.name)
 
   while 1:
     # Read a line of Serial Port
@@ -52,14 +52,12 @@ def serial_read():
         print(mensaje)
         mensaje = mensaje + "+" + new_line
         i = i - 1
-        
-      #mensaje = ";".join(datos_a_enviar)
+
       sequence += 1
       print(sequence)
       mensaje = str(sequence) + mensaje
       enviar_datos(mensaje)
       print(mensaje)
-      #datos_a_enviar = []
       mensaje = ""
 
 def main():
