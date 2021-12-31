@@ -24,7 +24,7 @@ def serial_read():
   lista_de_datos = []
   datos_a_enviar = []
   mensaje = ""
-  sequence = 0
+  # sequence = 0
   # Variable utilizada para saber si el sensor responde a AC0
   AC0 = "000318"
 
@@ -53,9 +53,9 @@ def serial_read():
         mensaje = mensaje + "+" + new_line
         i = i - 1
 
-      sequence += 1
-      print(sequence)
-      mensaje = str(sequence) + mensaje
+      #sequence += 1
+      #print(sequence)
+      #mensaje = str(sequence) + mensaje
       enviar_datos(mensaje)
       print(mensaje)
       mensaje = ""
