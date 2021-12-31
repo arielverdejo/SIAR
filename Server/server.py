@@ -20,32 +20,39 @@ def insertDB(listadedatos):
     cursor.close()
     conexion.close()
 
-port = 8050
+def server_conexion():
+    port = 8050
 
-# Create a TCP/IP socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # Create a TCP/IP socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Bind the socket to the port
-server_address = ("", port)
-print('Starting up on {} port {}'.format(*server_address))
-sock.bind(server_address)
+    # Bind the socket to the port
+    server_address = ("", port)
+    print('Starting up on {} port {}'.format(*server_address))
+    sock.bind(server_address)
 
-# Listen for incoming connections
-sock.listen(1)
+    # Listen for incoming connections
+    sock.listen(1)
 
-while True:
-    # Wait for a connection
-    print('Waiting for a connection')
-    connection, client_address = sock.accept()
-    try:
-        print('Connection from', client_address)
+    while True:
+        # Wait for a connection
+        print('Waiting for a connection')
+        connection, client_address = sock.accept()
+        try:
+            print('Connection from', client_address)
 
-        # Receive the data in small chunks and retransmit it
-        data = connection.recv(1024).decode("utf-8")
-        print('Received: \n{!r}'.format(data))
-        datos_en_lista = [1,2,3,4]
-        insertDB(datos_en_lista)
-            
-    finally:
-        # Clean up the connection
-        connection.close()
+            # Receive the data in small chunks and retransmit it
+            data = connection.recv(1024).decode("utf-8")
+            print('Received: \n{!r}'.format(data))
+            datos_en_lista = [1,2,3,4]
+            insertDB(datos_en_lista)
+                
+        finally:
+            # Clean up the connection
+            connection.close()
+
+def main():
+  server_conexion()
+
+if __name__ == "__main__":
+  main()
