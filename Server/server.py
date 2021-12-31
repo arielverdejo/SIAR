@@ -1,6 +1,8 @@
 import socket
 import sys
 import mysql.connector
+import time
+import datetime
 
 def insertDB(listadedatos):
     
@@ -11,11 +13,21 @@ def insertDB(listadedatos):
         "database":"testDB"
     }
 
+    ts = time.time()
+    timestamp_day = datetime.date.fromtimestamp(ts)
+    timestamp_hour = datetime.datetime.fromtimestamp(ts)
+
     conexion = mysql.connector.connect(**dbConnect)
     cursor = conexion.cursor()
 
-    sqlInsertar = "insert into tester(sequence, dataTime, solar, precipitation)values(%s,%s,%s,%s)"
-    cursor.execute(sqlInsertar,(str(listadedatos[0]),str(listadedatos[1]),str(listadedatos[2]),str(listadedatos[3])))
+    sqlInsertar = (
+        "INSERT INTO tester(sequence, dataTime, solar, precipitation, dia, hora) "
+        "VALUES (%s,%s,%s,%s,%s,%s)"
+    )
+
+    data = (str(listadedatos[0]),str(listadedatos[1]),str(listadedatos[2]),str(listadedatos[3]),timestamp_day, timestamp_hour)
+    
+    cursor.execute(sqlInsertar,data)
     conexion.commit()
     cursor.close()
     conexion.close()
