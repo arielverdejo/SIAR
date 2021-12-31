@@ -58,7 +58,7 @@ def serial_read():
       #mensaje = str(sequence) + mensaje
       enviar_datos(mensaje)
       print(mensaje)
-      mensaje = ""
+      mensaje = "0"
 
 def main():
   serial_read()
