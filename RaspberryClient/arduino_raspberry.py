@@ -39,7 +39,7 @@ def serial_read():
     # Take off the first two elements
     new_line = (line[:-2])
     if (new_line == AC0):
-      i = 3
+      i = 4
       while i >= 0:
         # Read the new line en este caso un comandos
         comando = serie.readline().decode(encoding = "utf-8")
