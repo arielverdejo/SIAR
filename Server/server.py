@@ -25,18 +25,21 @@ def insertDB(listadedatos):
 
     sqlInsertar = (
         "INSERT INTO tester(solar,precipitation,strikes,strikesDistance,"
-                            "windSpeed,windDirection,gustWindSpeed,airTemperature,"
-                            "vaporPressure,atmosphericPressure,relativeHumidity,"
-                            "humiditySensorTemperature,xOrientation,yOrientation,"
-                            "NorthWindSpeed,EastWindSpeed,dia,hora) "
+                            "windSpeed,windDirection,gustWindSpeed,"
+                            "airTemperature,vaporPressure,atmosphericPressure,relativeHumidity,humiditySensorTemperature,"
+                            "xOrientation,yOrientation,"
+                            "NorthWindSpeed,EastWindSpeed,"
+                            "dia,hora) "
         "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     )
     
     #data = ("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16",timestamp_day, timestamp_hour)
-    data = (str(listadedatos[0]),str(listadedatos[1]),str(listadedatos[2]),str(listadedatos[3]),
-            str(listadedatos[4]),str(listadedatos[5]),str(listadedatos[6]),str(listadedatos[7]),
-            str(listadedatos[8]),str(listadedatos[9]),str(listadedatos[10]),str(listadedatos[11]),
-            str(listadedatos[12]),str(listadedatos[13]),str(listadedatos[14]),str(listadedatos[15]),
+    
+    data = (str(listadedatos[2]),str(listadedatos[3]),str(listadedatos[4]),str(listadedatos[5]),
+            str(listadedatos[7]),str(listadedatos[8]),str(listadedatos[9]),
+            str(listadedatos[11]),str(listadedatos[12]),str(listadedatos[13]),str(listadedatos[14]),str(listadedatos[15]),
+            str(listadedatos[17]),str(listadedatos[18]),
+            str(listadedatos[21]),str(listadedatos[22]),
             timestamp_day, timestamp_hour)
     
     cursor.execute(sqlInsertar,data)
@@ -76,6 +79,7 @@ def server_conexion():
             data = connection.recv(1024).decode("utf-8")
             print('Received: \n{!r}'.format(data))
             datos_en_lista = especial_split(data)
+            print(datos_en_lista)
             #datos_en_lista = [1,2,3,4]
             insertDB(datos_en_lista)
                 
