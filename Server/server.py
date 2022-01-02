@@ -17,8 +17,8 @@ def insertDB(listadedatos):
     }
 
     ts = time.time()
-    timestamp_day = datetime.date.fromtimestamp(ts)
-    timestamp_hour = datetime.datetime.fromtimestamp(ts)
+    timestamp_day = datetime.datetime.fromtimestamp(ts)
+    timestamp_hour = datetime.datetime.utcnow()
 
     conexion = mysql.connector.connect(**dbConnect)
     cursor = conexion.cursor()
@@ -30,10 +30,9 @@ def insertDB(listadedatos):
                             "xOrientation,yOrientation,"
                             "NorthWindSpeed,EastWindSpeed,"
                             "dia,hora) "
+
         "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     )
-    
-    #data = ("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16",timestamp_day, timestamp_hour)
     
     data = (str(listadedatos[2]),str(listadedatos[3]),str(listadedatos[4]),str(listadedatos[5]),
             str(listadedatos[7]),str(listadedatos[8]),str(listadedatos[9]),
