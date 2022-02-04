@@ -1,0 +1,25 @@
+CREATE DATABASE testDB;
+
+USE testDB;
+
+CREATE TABLE tester (
+ sequence INT AUTO_INCREMENT PRIMARY KEY,
+ solar FLOAT,
+ precipitation FLOAT,
+ strikes FLOAT,
+ strikesDistance FLOAT,
+ windSpeed FLOAT,
+ windDirection FLOAT,
+ gustWindSpeed FLOAT, 
+ airTemperature FLOAT,
+ vaporPressure FLOAT,
+ atmosphericPressure FLOAT,
+ relativeHumidity FLOAT,
+ humiditySensorTemperature FLOAT,
+ xOrientation FLOAT,
+ yOrientation FLOAT,
+ NorthWindSpeed FLOAT,
+ EastWindSpeed FLOAT,
+ dia DATE,
+ hora DATETIME
+);
