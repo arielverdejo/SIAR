@@ -3,10 +3,69 @@
 import serial
 import socket
 
+import socket
+import time
+import datetime
+import re
+import mysql.connector
+
 #Variables
 host = '192.168.0.104'
 port = 8050
 
+def insert_database(lista_de_datos):
+  """This function insert a list into the database."""
+  database_connect = {
+    "host":"localhost",
+    "user":"root",
+    "password":"ariel",
+    "database":"testDB"
+  }
+
+  time_stamp = time.time()
+  timestamp_day = datetime.datetime.fromtimestamp(time_stamp)
+  timestamp_hour = datetime.datetime.utcnow()
+
+  conexion = mysql.connector.connect(**database_connect)
+  cursor = conexion.cursor()
+
+  sql_insert = (
+    "INSERT INTO tester("
+    "solar,precipitation,"
+    "strikes,strikesDistance,"
+    "windSpeed,windDirection,gustWindSpeed,"
+    "airTemperature,vaporPressure,atmosphericPressure,"
+    "relativeHumidity,humiditySensorTemperature,"
+    "xOrientation,yOrientation,"
+    "NorthWindSpeed,EastWindSpeed,"
+    "dia,hora) "
+
+    "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+  )
+  data = (
+    str(lista_de_datos[2]),str(lista_de_datos[3]),
+    str(lista_de_datos[4]),str(lista_de_datos[5]),
+    str(lista_de_datos[7]),str(lista_de_datos[8]),str(lista_de_datos[9]),
+    str(lista_de_datos[11]),str(lista_de_datos[12]),str(lista_de_datos[13]),
+    str(lista_de_datos[14]),str(lista_de_datos[15]),
+    str(lista_de_datos[17]),str(lista_de_datos[18]),
+    str(lista_de_datos[21]),str(lista_de_datos[22]),
+    timestamp_day, timestamp_hour
+  )
+  cursor.execute(sql_insert,data)
+  conexion.commit()
+  cursor.close()
+  conexion.close()
+
+
+def especial_split(string_to_split):
+  """Convert a string with + and - to a list with element, which conservates
+  the sign + or -."""
+  separador = ","
+  string_with_plus = string_to_split.replace("+",",+")
+  string_final = string_with_plus.replace("-",",-")
+  regular_exp = '|'.join(map(re.escape, separador))
+  return re.split(regular_exp, string_final)
 
 def enviar_datos(mensaje):
   # Creación de un objeto socket (lado cliente)
@@ -58,6 +117,9 @@ def serial_read():
       #mensaje = str(sequence) + mensaje
       enviar_datos(mensaje)
       print(mensaje)
+      datos_en_lista = especial_split(mensaje)
+      print(datos_en_lista)
+      insert_database(datos_en_lista)
       mensaje = "0"
 
 def main():
