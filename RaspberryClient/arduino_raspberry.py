@@ -115,7 +115,7 @@ def serial_read():
       #sequence += 1
       #print(sequence)
       #mensaje = str(sequence) + mensaje
-      enviar_datos(mensaje)
+      #enviar_datos(mensaje)
       print(mensaje)
       datos_en_lista = especial_split(mensaje)
       print(datos_en_lista)
