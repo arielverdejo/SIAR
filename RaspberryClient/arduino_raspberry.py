@@ -10,13 +10,13 @@ import re
 import mysql.connector
 
 #Variables
-host = '192.168.0.104'
+host = '192.168.0.101'
 port = 8050
 
 def insert_database(lista_de_datos):
   """This function insert a list into the database."""
   database_connect = {
-    "host":"localhost",
+    "host":"192.168.0.101",
     "user":"root",
     "password":"ariel",
     "database":"testDB"
