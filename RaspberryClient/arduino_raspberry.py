@@ -17,8 +17,8 @@ def insert_database(lista_de_datos):
   """This function insert a list into the database."""
   database_connect = {
     "host":"192.168.0.101",
-    "user":"root",
-    "password":"ariel",
+    "user":"pi",
+    "password":"raspberry",
     "database":"testDB"
   }
 
