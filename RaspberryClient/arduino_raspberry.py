@@ -22,8 +22,8 @@ def insert_database(lista_de_datos):
   print(mis_claves.password)
   database_connect = {
     "host":"192.168.0.101",
-    "user": mis_claves.user(),
-    "password": mis_claves.password(),
+    "user": "pi",
+    "password": "raspberry",
     "database":"testDB"
   }
 
