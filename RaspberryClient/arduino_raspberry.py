@@ -9,6 +9,8 @@ import datetime
 import re
 import mysql.connector
 
+import credentials
+
 #Variables
 host = '192.168.0.101'
 port = 8050
@@ -17,8 +19,8 @@ def insert_database(lista_de_datos):
   """This function insert a list into the database."""
   database_connect = {
     "host":"192.168.0.101",
-    "user":"pi",
-    "password":"raspberry",
+    "user": credentials.Claves.user,
+    "password":credentials.Claves.password,
     "database":"testDB"
   }
 
