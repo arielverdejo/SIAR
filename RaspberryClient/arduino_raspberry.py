@@ -17,10 +17,11 @@ port = 8050
 
 def insert_database(lista_de_datos):
   """This function insert a list into the database."""
+  mis_claves = credentials.Claves()
   database_connect = {
     "host":"192.168.0.101",
-    "user": credentials.Claves.user,
-    "password":credentials.Claves.password,
+    "user": mis_claves.user,
+    "password": mis_claves.password,
     "database":"testDB"
   }
 
