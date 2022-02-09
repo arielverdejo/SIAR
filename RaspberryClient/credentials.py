@@ -3,6 +3,6 @@
 class Claves:
     """Esta clase almacena las contraseñas y el usuario"""
     def __init__(self):
-        self.password = "password"
+        self.password = "contraseña"
         self.user = "usuario"
 
