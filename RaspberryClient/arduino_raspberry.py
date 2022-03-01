@@ -12,7 +12,7 @@ import mysql.connector
 import credentials
 
 #Variables
-host = '192.168.0.101'
+host = '192.168.0.104'
 port = 8050
 
 def insert_database(lista_de_datos):
@@ -21,9 +21,15 @@ def insert_database(lista_de_datos):
   mis_claves = credentials.Claves()
   print(mis_claves.password)
   database_connect = {
+<<<<<<< HEAD
     "host":"192.168.0.101",
     "user": "pi",
     "password": "raspberry",
+=======
+    "host":"localhost",
+    "user":"root",
+    "password":"ariel",
+>>>>>>> parent of 5cf46b6... Cambio IP del servidor
     "database":"testDB"
   }
 
