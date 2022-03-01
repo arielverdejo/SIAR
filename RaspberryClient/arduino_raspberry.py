@@ -21,15 +21,9 @@ def insert_database(lista_de_datos):
   mis_claves = credentials.Claves()
   print(mis_claves.password)
   database_connect = {
-<<<<<<< HEAD
     "host":"192.168.0.101",
     "user": "pi",
     "password": "raspberry",
-=======
-    "host":"localhost",
-    "user":"root",
-    "password":"ariel",
->>>>>>> parent of 5cf46b6... Cambio IP del servidor
     "database":"testDB"
   }
 
