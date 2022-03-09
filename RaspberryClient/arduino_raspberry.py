@@ -30,37 +30,41 @@ def insert_database(lista_de_datos):
   time_stamp = time.time()
   timestamp_day = datetime.datetime.fromtimestamp(time_stamp)
   timestamp_hour = datetime.datetime.utcnow()
+  try:
+    conexion = mysql.connector.connect(**database_connect)
+    cursor = conexion.cursor()
 
-  conexion = mysql.connector.connect(**database_connect)
-  cursor = conexion.cursor()
+    sql_insert = (
+      "INSERT INTO tester("
+      "solar,precipitation,"
+      "strikes,strikesDistance,"
+      "windSpeed,windDirection,gustWindSpeed,"
+      "airTemperature,vaporPressure,atmosphericPressure,"
+      "relativeHumidity,humiditySensorTemperature,"
+      "xOrientation,yOrientation,"
+      "NorthWindSpeed,EastWindSpeed,"
+      "dia,hora) "
 
-  sql_insert = (
-    "INSERT INTO tester("
-    "solar,precipitation,"
-    "strikes,strikesDistance,"
-    "windSpeed,windDirection,gustWindSpeed,"
-    "airTemperature,vaporPressure,atmosphericPressure,"
-    "relativeHumidity,humiditySensorTemperature,"
-    "xOrientation,yOrientation,"
-    "NorthWindSpeed,EastWindSpeed,"
-    "dia,hora) "
-
-    "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-  )
-  data = (
-    str(lista_de_datos[2]),str(lista_de_datos[3]),
-    str(lista_de_datos[4]),str(lista_de_datos[5]),
-    str(lista_de_datos[7]),str(lista_de_datos[8]),str(lista_de_datos[9]),
-    str(lista_de_datos[11]),str(lista_de_datos[12]),str(lista_de_datos[13]),
-    str(lista_de_datos[14]),str(lista_de_datos[15]),
-    str(lista_de_datos[17]),str(lista_de_datos[18]),
-    str(lista_de_datos[21]),str(lista_de_datos[22]),
-    timestamp_day, timestamp_hour
-  )
-  cursor.execute(sql_insert,data)
-  conexion.commit()
-  cursor.close()
-  conexion.close()
+      "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    )
+    data = (
+      str(lista_de_datos[2]),str(lista_de_datos[3]),
+      str(lista_de_datos[4]),str(lista_de_datos[5]),
+      str(lista_de_datos[7]),str(lista_de_datos[8]),str(lista_de_datos[9]),
+      str(lista_de_datos[11]),str(lista_de_datos[12]),str(lista_de_datos[13]),
+      str(lista_de_datos[14]),str(lista_de_datos[15]),
+      str(lista_de_datos[17]),str(lista_de_datos[18]),
+      str(lista_de_datos[21]),str(lista_de_datos[22]),
+      timestamp_day, timestamp_hour
+    )
+    cursor.execute(sql_insert,data)
+  except mysql.connector.Error as error:
+    print("Failed")
+  finally:
+    if conexion.is_connected():
+      conexion.commit()
+      cursor.close()
+      conexion.close()
 
 
 def especial_split(string_to_split):
