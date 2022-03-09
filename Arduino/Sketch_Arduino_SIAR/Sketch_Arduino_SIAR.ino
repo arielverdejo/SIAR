@@ -46,6 +46,8 @@ extern volatile unsigned long timer0_millis;
 unsigned long new_value = 0;
 
 void setup() {
+  Serial.begin(SERIAL_BAUD);
+  while (!Serial);
   // Power the sensors;
   if (POWER_PIN > 0) {
     Serial.println("Powering up sensors...");
@@ -54,9 +56,6 @@ void setup() {
     delay(55000);
   }
   
-  Serial.begin(SERIAL_BAUD);
-  while (!Serial);
-
   Serial.println("Opening SDI-12 bus...");
   mySDI12.begin();
   delay(500);  // allow things to settle
@@ -136,6 +135,7 @@ void loop() {
     tiempoFinal = tiempo2 - tiempo1;
   }
 
+  Serial.println(tiempoFinal);
   setMillis(new_value);
   
 }
