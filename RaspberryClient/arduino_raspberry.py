@@ -11,6 +11,8 @@ import mysql.connector
 
 import credentials
 
+import Eto_object
+
 #Variables
 host = '192.168.0.104'
 port = 8050
@@ -42,7 +44,7 @@ def insert_database(lista_de_datos):
       "airTemperature,vaporPressure,atmosphericPressure,"
       "relativeHumidity,humiditySensorTemperature,"
       "xOrientation,yOrientation,"
-      "NorthWindSpeed,EastWindSpeed,"
+      "NorthWindSpeed,EastWindSpeed,Evotranspiracion"
       "dia,hora) "
 
       "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
@@ -54,7 +56,7 @@ def insert_database(lista_de_datos):
       str(lista_de_datos[11]),str(lista_de_datos[12]),str(lista_de_datos[13]),
       str(lista_de_datos[14]),str(lista_de_datos[15]),
       str(lista_de_datos[17]),str(lista_de_datos[18]),
-      str(lista_de_datos[21]),str(lista_de_datos[22]),
+      str(lista_de_datos[21]),str(lista_de_datos[22]),str(lista_de_datos[-1]),
       timestamp_day, timestamp_hour
     )
     cursor.execute(sql_insert,data)
@@ -128,6 +130,8 @@ def serial_read():
       print(mensaje)
       datos_en_lista = especial_split(mensaje)
       print(datos_en_lista)
+      valor_Eto = Eto_object.EtoObject().read_Eto()
+      datos_en_lista.append(valor_Eto)
       insert_database(datos_en_lista)
       mensaje = "0"
 
