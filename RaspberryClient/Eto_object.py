@@ -3,7 +3,7 @@ class EtoObject:
 
   def read_Eto(self):
     """Lee un valor desde un archivo y lo devuelve"""
-    with open("valor_Eto") as f:
+    with open("/home/ariel/SIAR/RaspberryClient/valor_Eto") as f:
       valor = f.readline()
     return valor
 
