@@ -4,7 +4,7 @@ class EtoObject:
   def read_Eto(self):
     """Lee un valor desde un archivo y lo devuelve"""
     with open("/home/pi/SIAR/RaspberryClient/valor_Eto") as f:
-      valor = f.readline()
+      valor = f.splitlines()
     return valor
 
   def saludar(self):
