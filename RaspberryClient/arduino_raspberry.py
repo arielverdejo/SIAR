@@ -34,6 +34,7 @@ def insert_database(lista_de_datos):
   timestamp_hour = datetime.datetime.utcnow()
   try:
     conexion = mysql.connector.connect(**database_connect)
+    print("Conexión exitosa")
     cursor = conexion.cursor()
 
     sql_insert = (
@@ -60,8 +61,10 @@ def insert_database(lista_de_datos):
       timestamp_day, timestamp_hour
     )
     cursor.execute(sql_insert,data)
+  
   except mysql.connector.Error as error:
     print("Failed")
+  
   finally:
     if conexion.is_connected():
       conexion.commit()
