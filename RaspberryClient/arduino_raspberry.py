@@ -57,7 +57,7 @@ def insert_database(lista_de_datos):
       str(lista_de_datos[11]),str(lista_de_datos[12]),str(lista_de_datos[13]),
       str(lista_de_datos[14]),str(lista_de_datos[15]),
       str(lista_de_datos[17]),str(lista_de_datos[18]),
-      str(lista_de_datos[21]),str(lista_de_datos[22]),str(lista_de_datos[23]),
+      str(lista_de_datos[21]),str(lista_de_datos[22]),str(lista_de_datos[24]),
       timestamp_day, timestamp_hour
     )
     cursor.execute(sql_insert,data)
