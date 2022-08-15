@@ -63,7 +63,7 @@ def insert_database(lista_de_datos):
     cursor.execute(sql_insert,data)
   
   except mysql.connector.Error as error:
-    print("Failed")
+    print("Fallo al conectar a la base de datos: {}".format(error))
   
   finally:
     if conexion.is_connected():
