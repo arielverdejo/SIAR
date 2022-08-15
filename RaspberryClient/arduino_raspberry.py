@@ -135,6 +135,7 @@ def serial_read():
       valor_Eto = Eto_object.EtoObject().read_Eto()
       datos_en_lista.append(valor_Eto)
       print(datos_en_lista)
+      print(len(datos_en_lista))
       insert_database(datos_en_lista)
       mensaje = "0"
 
