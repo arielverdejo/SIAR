@@ -48,7 +48,7 @@ def insert_database(lista_de_datos):
       "NorthWindSpeed,EastWindSpeed,Evotranspiracion"
       "dia,hora) "
 
-      "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+      "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     )
     data = (
       str(lista_de_datos[2]),str(lista_de_datos[3]),
@@ -132,7 +132,7 @@ def serial_read():
       #enviar_datos(mensaje)
       print(mensaje)
       datos_en_lista = especial_split(mensaje)
-      valor_Eto = Eto_object.EtoObject().read_Eto()
+      valor_Eto = str(Eto_object.EtoObject().read_Eto())
       datos_en_lista.append(valor_Eto)
       print(datos_en_lista)
       print(len(datos_en_lista))
