@@ -133,7 +133,7 @@ def serial_read():
       print(mensaje)
       datos_en_lista = especial_split(mensaje)
       valor_Eto = str(Eto_object.EtoObject().read_Eto())
-      datos_en_lista.append(valor_Eto[0])
+      datos_en_lista.append(valor_Eto[1])
       print(datos_en_lista)
       print(len(datos_en_lista))
       insert_database(datos_en_lista)
