@@ -45,7 +45,7 @@ def insert_database(lista_de_datos):
       "airTemperature,vaporPressure,atmosphericPressure,"
       "relativeHumidity,humiditySensorTemperature,"
       "xOrientation,yOrientation,"
-      "NorthWindSpeed,EastWindSpeed,Evotranspiracion"
+      "NorthWindSpeed,EastWindSpeed,Evotranspiracion,"
       "dia,hora) "
 
       "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
