@@ -207,7 +207,7 @@ def calculo_radiacion_solar():
     return Rs_real
 """
 def guardar_en_archivo(dato):
-    with open("valor_Eto",'w') as f:
+    with open("/home/pi/SIAR/RaspberryClient/valor_Eto",'w') as f:
         f.write(str(dato))
 
 """
