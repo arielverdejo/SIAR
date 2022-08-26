@@ -39,8 +39,8 @@ def calculos_sensor():
         query = ("SELECT airTemperature, relativeHumidity, atmosphericPressure, windSpeed FROM tester "
                  "WHERE dia BETWEEN %s AND %s")
 
-        #hoy = datetime.date.today()
-        hoy = datetime.datetime(year=2022, month=5,day=13)
+        hoy = datetime.date.today()
+        #hoy = datetime.datetime(year=2022, month=5,day=13)
         ayer = hoy - datetime.timedelta(days=1)
 
         cursor.execute(query,(ayer,ayer))
@@ -57,8 +57,8 @@ def calculos_sensor():
         HR_m = min(humedad)
         PA = statistics.mean(presionAtmosferica)
         uviento = statistics.mean(velocidadViento)
-        #numero_dia = (ayer - datetime.date(hoy.year, 1, 1)).days + 1
-        numero_dia = (ayer - datetime.datetime(hoy.year,1,1)).days + 1
+        numero_dia = (ayer - datetime.date(hoy.year, 1, 1)).days + 1
+        #numero_dia = (ayer - datetime.datetime(hoy.year,1,1)).days + 1
 
     except mysql.connector.Error as error:
         print("Failed calculos sensor")
