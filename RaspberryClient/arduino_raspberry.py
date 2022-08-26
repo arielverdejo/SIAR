@@ -106,10 +106,6 @@ def serial_read():
         mensaje = mensaje + "+" + new_line
         i = i - 1
 
-      #sequence += 1
-      #print(sequence)
-      #mensaje = str(sequence) + mensaje
-      #enviar_datos(mensaje)
       print(mensaje)
       datos_en_lista = especial_split(mensaje)
       valor_Eto = str(Eto_object.EtoObject().read_Eto())
