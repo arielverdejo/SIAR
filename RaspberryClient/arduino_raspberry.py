@@ -9,19 +9,11 @@ import datetime
 import re
 import mysql.connector
 
-import credentials
-
 import Eto_object
-
-#Variables
-host = '192.168.0.104'
-port = 8050
 
 def insert_database(lista_de_datos):
   """This function insert a list into the database."""
   
-  mis_claves = credentials.Claves()
-  print(mis_claves.password)
   database_connect = {
     "host":"200.10.196.116",
     "user": "pi",
