@@ -73,18 +73,6 @@ def especial_split(string_to_split):
   regular_exp = '|'.join(map(re.escape, separador))
   return re.split(regular_exp, string_final)
 
-def enviar_datos(mensaje):
-  # Creación de un objeto socket (lado cliente)
-  clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  # Conexión con el servidor. Parametros: IP (puede ser del tipo 192.168.1.1 o localhost), Puerto
-  clientSocket.connect((host, port))
-  print("Conectado al servidor")
-  clientSocket.send(mensaje.encode())
-  # Cerramos la instancia del objeto servidor
-  clientSocket.close()
-  # Imprimimos mensaje  para cuando se cierre la conexion
-  print("Conexión cerrada")
-
 def serial_read():
   lista_de_datos = []
   datos_a_enviar = []
