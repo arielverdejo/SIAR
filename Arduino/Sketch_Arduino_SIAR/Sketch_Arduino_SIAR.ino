@@ -53,7 +53,7 @@ void setup() {
     Serial.println("Powering up sensors...");
     pinMode(POWER_PIN, OUTPUT);
     digitalWrite(POWER_PIN, HIGH);
-    delay(55000);
+    delay(200);
   }
   
   Serial.println("Opening SDI-12 bus...");
@@ -63,12 +63,13 @@ void setup() {
 
 void loop() {
   tiempo1 = millis();
-  mySDI12.flush();
   Serial.println("Inicio");
   //Serial.println("startConcurrent");
   Serial.println("0C!");
+  mySDI12.flush();
   mySDI12.sendCommand(startConcurrent);
-  delay(500);                     // print again in three seconds
+  delay(3000);                     // print again in three seconds
+  mySDI12.flush();
   while (mySDI12.available()) {   // write the response to the screen
     Serial.write(mySDI12.read());
   }
@@ -79,7 +80,8 @@ void loop() {
   Serial.println("0D0!");
   mySDI12.flush();
   mySDI12.sendCommand(solarPlus);
-  delay(500);                     // print again in three seconds
+  delay(3000);                     // print again in three seconds
+  mySDI12.flush();
   while (mySDI12.available()) {   // write the response to the screen
     Serial.write(mySDI12.read());
   }
@@ -89,7 +91,8 @@ void loop() {
   Serial.println("0D1!");
   mySDI12.flush();
   mySDI12.sendCommand(windPlus);
-  delay(500);                     // print again in three seconds
+  delay(3000);                     // print again in three seconds
+  mySDI12.flush();
   while (mySDI12.available()) {   // write the response to the screen
     Serial.write(mySDI12.read());
   }
@@ -99,7 +102,8 @@ void loop() {
   Serial.println("0D2!");
   mySDI12.flush();
   mySDI12.sendCommand(temperature);
-  delay(500);                     // print again in three seconds
+  delay(300);                     // print again in three seconds
+  mySDI12.flush();
   while (mySDI12.available()) {   // write the response to the screen
     Serial.write(mySDI12.read());
   }
@@ -109,7 +113,8 @@ void loop() {
   Serial.println("0D3!");
   mySDI12.flush();
   mySDI12.sendCommand(orientation);
-  delay(500);                     // print again in three seconds
+  delay(300);                     // print again in three seconds
+  mySDI12.flush();
   while (mySDI12.available()) {   // write the response to the screen
     Serial.write(mySDI12.read());
   }
@@ -119,7 +124,7 @@ void loop() {
   Serial.println("0D4!");
   mySDI12.flush();
   mySDI12.sendCommand(wind);
-  delay(500);                     // print again in three seconds
+  delay(300);                     // print again in three seconds
   while (mySDI12.available()) {   // write the response to the screen
     Serial.write(mySDI12.read());
   }
@@ -135,7 +140,7 @@ void loop() {
     tiempoFinal = tiempo2 - tiempo1;
   }
 
-  Serial.println(tiempoFinal);
+  //Serial.println(tiempoFinal);
   setMillis(new_value);
   
 }
