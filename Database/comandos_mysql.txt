@@ -20,6 +20,9 @@ CREATE TABLE tester (
  yOrientation FLOAT,
  NorthWindSpeed FLOAT,
  EastWindSpeed FLOAT,
+ Evotranspiracion FLOAT,
  dia DATE,
  hora DATETIME
 );
+
+GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* To 'pi'@'%' WITH GRANT OPTION;
