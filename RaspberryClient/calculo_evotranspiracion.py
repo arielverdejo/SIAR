@@ -1,16 +1,9 @@
 #!/usr/bin/env python3
 
-from glob import escape
 import math
 import datetime
 import statistics
 import mysql.connector
-import csv
-import Eto_object
-
-def impresora(lista):
-  for elementos in lista:
-    print(elementos)
 
 def calculos_sensor():
   temperatura = []
@@ -104,41 +97,6 @@ def valores_intensidad_solar(inicio, fin):
 
   return sol
 
-"""
-def tiempo_por_cuartos(inicio, fin):
-  sol = []
-
-  database_connect = {
-    "host":"200.10.196.116",
-    "user": "pi",
-    "password": "raspberry",
-    "database":"testDB"
-  }
-
-  try:
-    cnx = mysql.connector.connect(**database_connect)
-    cursor = cnx.cursor()
-
-    query = ("SELECT solar, hora FROM tester "
-            "WHERE hora BETWEEN %s AND %s")
-
-    cursor.execute(query, (inicio, fin))
-
-    for (solar, hora) in cursor:
-      sol.append(solar)
-      nueva_hora = hora - datetime.timedelta(hours=3)
-
-  except mysql.connector.Error as error:
-    print("Failed tiempo_por_cuartos")
-
-  finally:
-    if cnx.is_connected():
-      cnx.commit()
-      cursor.close()
-      cnx.close()
-
-  return sol
-"""
 def calculo_radiacion_por_minuto(inicio, fin):
   valores_radiacion_en_lista = valores_intensidad_solar(inicio, fin)
   suma_radiacion = 0
@@ -148,21 +106,6 @@ def calculo_radiacion_por_minuto(inicio, fin):
   print("Radiacion total por cuarto = {}".format(suma_radiacion))
 
   return suma_radiacion
-
-"""
-def calculo_radiacion_por_cuartos(indice, inicio, fin):
-  tiempo_radiacion_en_lista = tiempo_por_cuartos(inicio, fin)
-  tiempo_de_radiacion = 0
-  radiacion_total_por_cuarto = 0
-  for element in tiempo_radiacion_en_lista:
-    if element != 0:
-      tiempo_de_radiacion += 60
-  print("Tiempo de radiacion = {}".format(tiempo_de_radiacion))
-  radiacion_total_por_cuarto = tiempo_de_radiacion * indice
-  print("Radiacion total por cuarto = {}".format(radiacion_total_por_cuarto))
-
-  return radiacion_total_por_cuarto
-"""
 
 def calculo_radiacion_solar():
   hoy = datetime.datetime.today()
@@ -179,75 +122,9 @@ def calculo_radiacion_solar():
 
   return Rs_real
 
-"""
-def calculo_radiacion_solar():
-  #hoy = datetime.datetime.today()
-  hoy = datetime.datetime(year=2022, month=5,day=13)
-
-  ayer = hoy - datetime.timedelta(days=1)
-  ayer_inicial = ayer.replace(hour=0, minute=0, second=0, microsecond=0) + datetime.timedelta(hours=3)
-  primer_cuarto = ayer.replace(hour=6, minute=0, second=0, microsecond=0) + datetime.timedelta(hours=3)
-  segundo_cuarto = ayer.replace(hour=12, minute=0, second=0, microsecond=0) + datetime.timedelta(hours=3)
-  tercer_cuarto = ayer.replace(hour=18, minute=0, second=0, microsecond=0) + datetime.timedelta(hours=3)
-  cuarto_cuarto = hoy.replace(hour=0, minute=0, second=0, microsecond=0) + datetime.timedelta(hours=3)
-
-  indice_primer_cuarto = 50
-  indice_segundo_cuarto = 300
-  indice_tercer_cuarto = 700
-  indice_cuarto_cuarto = 50
-
-  Rs_real = ((calculo_radiacion_por_cuartos(indice_primer_cuarto, ayer_inicial, primer_cuarto)
-    + calculo_radiacion_por_cuartos(indice_segundo_cuarto,primer_cuarto, segundo_cuarto)
-    + calculo_radiacion_por_cuartos(indice_tercer_cuarto, segundo_cuarto, tercer_cuarto)
-    + calculo_radiacion_por_cuartos(indice_cuarto_cuarto, tercer_cuarto, cuarto_cuarto))
-    /1000000)
-  
-  print(Rs_real)
-
-  return Rs_real
-"""
 def guardar_en_archivo(dato):
   with open("/home/pi/SIAR/RaspberryClient/valor_Eto",'w') as f:
     f.write(str(dato))
-
-"""
-def insert_database(dato1, dato2):
-  This function insert a list into the database.
-  
-  database_connect = {
-    "host":"200.10.196.116",
-    "user": "pi",
-    "password": "raspberry",
-    "database":"testDB"
-  }
-  try:
-    conexion = mysql.connector.connect(**database_connect)
-    cursor = conexion.cursor()
-    sql_insert = ("INSERT INTO tester (Evotranspiracion,solar) VALUES (%s,%s)")
-    data = (str(dato1),str(dato2))
-    print(data)
-    cursor.execute(sql_insert,data)
-  except mysql.connector.Error as error:
-    print("Failed insert_database")
-  finally:
-    if conexion.is_connected():
-      conexion.commit()
-      cursor.close()
-      conexion.close()
-"""
-def pasar_csv(lista):
-  fields = ["Altura","LatGrad","LatRad","dl","dr","delta","ws","sen_sen",
-          "cos_cos","Gsc","Ra","N","n","Rs_cal","Rs_real","Rso_despejado",
-          "Evaporacion","Sigma","Lambda","cp","Epsilon","Ganma","PA",
-          "PA_Atmos","TM_Atmos","Tm_Atmos","ea","HR_M_Atmos","HR_m_Atmos",
-          "es_TM","es_Tm","ea_M","eam","es_ea","Rs/Rso","Rnl","Rns","Rn_calc",
-          "Rn","G","AlturaAnem","uviento_Atmos","uvientocor",
-          "Delta_Mayuscula","Eto"]
-
-  with open('Test.csv', 'w') as f: 
-    write = csv.writer(f)  
-    write.writerow(fields) 
-    write.writerow(lista)
 
 def obtener_valores_sensor():
   valores_obtenidos = calculos_sensor()
@@ -290,7 +167,7 @@ def obtener_valores_sensor():
   Rs_Rso = Rs_real/Rso_despejado                                           #AJ
   Rnl = (Sigma *((((TM_Atmos+273.16)**4+(Tm_Atmos+273.16)**4))/2)
     *(0.34-0.14*math.sqrt((ea_M+ea_m)/2))
-    *(1.35*Rs_real/Rso_despejado-0.35))                                  #AK
+    *(1.35*Rs_real/Rso_despejado-0.35))                                    #AK
   Rns = (1-0.23)*Rs_real                                                   #AL
   Rn_calc = Rns-Rnl                                                        #AM
   Rn = Rn_calc*0.408                                                       #AN
@@ -312,16 +189,7 @@ def obtener_valores_sensor():
               HR_m_Atmos,es_TM,es_Tm,ea_M,ea_m,es_ea,Rs_Rso,Rnl,Rns,Rn_calc,
               Rn,G,AlturaAnem,uviento_Atmos,uvientocor,Delta_Mayuscula,Eto])
   
-  #pasar_csv(Parametros)
-  #impresora(Parametros)
-
-  #print("Este es el eto " + str(Eto))
-  #insert_database(Eto,1)
-
   guardar_en_archivo(Eto)
-
-  #nuevo = Eto_object.EtoObject().read_Eto()
-  #print(nuevo)
 
 def main():
   obtener_valores_sensor()
