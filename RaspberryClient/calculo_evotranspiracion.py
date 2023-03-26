@@ -6,6 +6,11 @@ import statistics
 import mysql.connector
 
 def calculos_sensor():
+  """
+  Función principal. Para realizar el calculo de la Evapotranspiración
+  necesitamos solo algunos valores de los dados por el sensor ATMOS41. A tráves
+  de esta función traemos estos valores desde la Base de Datos en el servidor
+  """
   temperatura = []
   humedad = []
   presionAtmosferica = []
@@ -65,6 +70,10 @@ def calculos_sensor():
   return [numero_dia, PA, TM, Tm, HR_M, HR_m, uviento] 
 
 def valores_intensidad_solar(inicio, fin):
+  """
+  Esta función trae los valores de radiación solar desde la Base de Datos en el
+  Servidor. Guarda esos datos en una lista.
+  """
   sol = []
 
   database_connect = {
@@ -98,20 +107,34 @@ def valores_intensidad_solar(inicio, fin):
   return sol
 
 def calculo_radiacion_por_minuto(inicio, fin):
+  """
+  Calcula la radiación total por minuto. Toma los valores obtenidos desde la 
+  Base de Datos llamando la función "valores_intensidad_solar" y lo multiplica 
+  por 60.
+  """
   valores_radiacion_en_lista = valores_intensidad_solar(inicio, fin)
   suma_radiacion = 0
   for element in valores_radiacion_en_lista:
     radiacion_por_minuto = int(element[0]) * 60
     suma_radiacion += radiacion_por_minuto
-  print("Radiacion total por cuarto = {}".format(suma_radiacion))
+  print("Radiacion total por minuto = {}".format(suma_radiacion))
 
   return suma_radiacion
 
 def calculo_radiacion_solar():
+  """
+  Les provee los valores de tiempo para los cuales la funcion 
+  "radiación_por_minuto" debe realizar el calculo.
+  """
   hoy = datetime.datetime.today()
   #hoy = datetime.datetime(year=2022, month=5,day=13)
-
+  
+  # Se espera que este calculo se realice un dia despues de la toma de datos, 
+  # por ello se regresa un dia hacia atras
   ayer = hoy - datetime.timedelta(days=1)
+
+  # Además debido a que los datos son guardados como GMT0 y nosotros estamos en
+  # GMT -3 es que movemos la hora 3 horas.
   ayer_inicial = ayer.replace(hour=0, minute=0, second=0, microsecond=0) + datetime.timedelta(hours=3)
   hoy_final = hoy.replace(hour=0, minute=0, second=0, microsecond=0) + datetime.timedelta(hours=3)
 
@@ -123,10 +146,19 @@ def calculo_radiacion_solar():
   return Rs_real
 
 def guardar_en_archivo(dato):
+  """
+  Guarda el valor obtenido del ETO en archivo. Ese valor luego es leido por la
+  función que enviara los datos a la Base de Datos.
+  """
   with open("/home/pi/SIAR/RaspberryClient/valor_Eto",'w') as f:
     f.write(str(dato))
 
 def obtener_valores_sensor():
+  """
+  Función principal. Simplemente realiza los cálculos para lograr el valor del
+  ETO. Para ello llama diferentes funciones. Al final guardo el valor del ETO en
+  un archivo.
+  """
   valores_obtenidos = calculos_sensor()
 
   Altura =  920                                                            #B
@@ -182,13 +214,6 @@ def obtener_valores_sensor():
       ((900/((TM_Atmos+Tm_Atmos)/2+273)*uvientocor*(es_ea)*Ganma)
       /(Delta_Mayuscula+Ganma*(1+0.34*uviento_Atmos))))                    #AT
 
-
-  Parametros = ([Altura,LatGrad,LatRad,dl,dr,delta,ws,sen_sen,cos_cos,Gsc,Ra,
-              N,n,Rs_cal,Rs_real,Rso_despejado,Evaporacion,Sigma,Lambda,cp,
-              Epsilon,Ganma,PA,PA_Atmos,TM_Atmos,Tm_Atmos,ea,HR_M_Atmos,
-              HR_m_Atmos,es_TM,es_Tm,ea_M,ea_m,es_ea,Rs_Rso,Rnl,Rns,Rn_calc,
-              Rn,G,AlturaAnem,uviento_Atmos,uvientocor,Delta_Mayuscula,Eto])
-  
   guardar_en_archivo(Eto)
 
 def main():
@@ -196,15 +221,3 @@ def main():
 
 if __name__ == "__main__":
   main()
-
-"""
-Calcular
-- dias dl #E
-- radiacion solar Rs_real #P
-- Presion Atmosferica PA #Y x
-- Temperatura Maxima TM #Z x
-- Temperatura Minima Tm #AA x
-- Humedad Relativa Maxima HR_M #AC x
-- Humedad Relativa Minima HR_m #AD x
-- Viento uviento #AQ x
-"""
